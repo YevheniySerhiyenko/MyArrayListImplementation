@@ -1,5 +1,7 @@
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MyArrayListImpl<T> implements MyArrayList {
     private final int DEFAULT_SIZE = 10;
@@ -85,20 +87,36 @@ public class MyArrayListImpl<T> implements MyArrayList {
         }
     }
 
-
     @Override
     public int search(Object value) {
-        return 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(value) && array[i] != null)
+                return i;
+        }
+        return -1;
     }
 
     @Override
     public void shuffle() {
+        Random random = ThreadLocalRandom.current();
+        for (int i = array.length - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            // Simple swap
+            int a = (int) array[index];
+            array[index] = array[i];
+            array[i] = a;
+        }
     }
 
     @Override
     public MyArrayListImpl subList(int start, int end) {
-        return null;
+        MyArrayListImpl list = new MyArrayListImpl();
+        for (int i = start; i <= end ; i++) {
+            list.add(array[i]);
+        }
+        return list;
     }
+
 
 
     @Override
