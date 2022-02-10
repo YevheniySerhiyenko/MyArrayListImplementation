@@ -32,8 +32,6 @@ public interface MyArrayList<T> {
 
     public void trim();
 
-    void remove(Object o);
-
     void sort(Comparator<? super T> comparator);
 
     void clear();

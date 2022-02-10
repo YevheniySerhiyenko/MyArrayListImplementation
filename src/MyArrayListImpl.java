@@ -117,14 +117,10 @@ public class MyArrayListImpl<T> implements MyArrayList {
         return list;
     }
 
-
-
+    //метод удаляет из листа совпадения со значением value
     @Override
     public void removeIfContains(Object value) {
-    }
-
-    @Override
-    public void remove(Object o) {
+        array =  Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
     }
 
     @Override
