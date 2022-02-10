@@ -44,16 +44,20 @@ public class MyArrayListImpl<T> implements MyArrayList {
         return list;
     }
 
-
     @Override
     public T get(int index) {
-        return null;
+        trim();
+        T t = null;
+        if (index < array.length) {
+            t =  (T) array[index];
+        }
+        return t;
+    }
+    @Override
+    public int size(){
+        return array.length;
     }
 
-    @Override
-    public int size() {
-        return 0;
-    }
 
     @Override
     public T[] toArray() {
