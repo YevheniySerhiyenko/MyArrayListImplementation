@@ -160,5 +160,9 @@ public class MyArrayListImpl<T> implements MyArrayList {
     public int indexOf(Object o) {
         return 0;
     }
+    @Override
+    public boolean equals(Object o){
+        return false;
+    }
 
 }
