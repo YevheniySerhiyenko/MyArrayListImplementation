@@ -8,26 +8,28 @@ public class MyArrayListImpl<T> implements MyArrayList {
     private Object[] array;
     private int actualSize = 0;     // заполненность внутреннего массива
 
-
+    //конструктор по умолчанию
     public MyArrayListImpl() {
         array = new Object[DEFAULT_SIZE];
     }
 
-    //    конструктор для задания размера
+    // конструктор для задания размера
     public MyArrayListImpl(int size) {
         array = new Object[size];
     }
 
     @Override
     public void add(Object o) {
-        if (actualSize >= array.length / 2) { // если актуальный размер массива достиг размера половины изначального
-            newSize();                        // увеличиваем массив в два раза
+         /* если актуальный размер массива достиг размера половины изначального
+         увеличиваем массив в два раза */
+        if (actualSize >= array.length / 2) {
+            newSize();
         }
         array[actualSize++] = o;
     }
 
-    //    метод для добавления объекта по индексу
-    //    элементы сдвигаются вправо на одну позицию
+       /* метод для добавления объекта по индексу
+       элементы сдвигаются вправо на одну позицию */
     @Override
     public void add(Object o, int index) {
         System.arraycopy(array,index,array,index + 1,actualSize - index);
@@ -61,11 +63,11 @@ public class MyArrayListImpl<T> implements MyArrayList {
         return array.length;
     }
 
-
     @Override
     public T[] toArray() {
         return (T[]) Arrays.copyOf(array,actualSize);
     }
+
     //метод возвращает коллекцию в обратном порядке
     @Override
     public MyArrayListImpl<? extends T> reverseList() {
@@ -87,6 +89,8 @@ public class MyArrayListImpl<T> implements MyArrayList {
         }
     }
 
+    /* метод для поиска индекса обьекта по значению,
+       возвращает индекс */
     @Override
     public int search(Object value) {
         for (int i = 0; i < array.length; i++) {
@@ -95,7 +99,7 @@ public class MyArrayListImpl<T> implements MyArrayList {
         }
         return -1;
     }
-
+    // метод для перемешивания элементов коллекции в случайном порядке
     @Override
     public void shuffle() {
         Random random = ThreadLocalRandom.current();
@@ -107,7 +111,7 @@ public class MyArrayListImpl<T> implements MyArrayList {
             array[i] = a;
         }
     }
-
+    // возвращает коллекцию с элементами с позиции start до позиции end включительно
     @Override
     public MyArrayListImpl subList(int start, int end) {
         MyArrayListImpl list = new MyArrayListImpl();
