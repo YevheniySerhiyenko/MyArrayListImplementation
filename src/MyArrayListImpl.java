@@ -17,15 +17,20 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void add(Object o) {
-
-    }
-
-    @Override
-    public void add(Object o, int index) {
         if (actualSize >= array.length / 2) { // если актуальный размер массива достиг размера половины изначального
             newSize();                        // увеличиваем массив в два раза
         }
         array[actualSize++] = o;
+    }
+
+    //    метод для добавления объекта по индексу
+    //    элементы сдвигаются вправо на одну позицию
+    @Override
+    public void add(Object o, int index) {
+        System.arraycopy(array,index,array,index + 1,actualSize - index);
+        array[index] = o;
+        actualSize++;
+
     }
 
     @Override
