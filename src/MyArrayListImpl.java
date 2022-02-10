@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class MyArrayListImpl<T> implements MyArrayList {
@@ -61,20 +62,29 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public T[] toArray() {
-        return null;
+        return (T[]) Arrays.copyOf(array,actualSize);
     }
-
+    //метод возвращает коллекцию в обратном порядке
     @Override
     public MyArrayListImpl<? extends T> reverseList() {
-        return null;
+        MyArrayListImpl<? extends T> list = new MyArrayListImpl();
+        for (int i = array.length - 1; i >= 0; i--) {
+            list.add(array[i]);
+        }
+        return list;
     }
 
-    private void newSize() {
+    // приватный метод для увеличения массива
+    private void newSize(){
+        array = Arrays.copyOf(array, array.length * 2);
     }
 
-    @Override
-    public void trim() {
+    public void trim(){
+        if (actualSize < array.length){
+            array = Arrays.copyOf(array,actualSize);
+        }
     }
+
 
     @Override
     public int search(Object value) {
