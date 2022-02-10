@@ -33,10 +33,17 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     }
 
+    // метод для склейки двух листов, возвращает новый лист
     @Override
     public MyArrayListImpl<? extends T> concat(MyArrayList newList) {
-        return null;
+        MyArrayListImpl list  = new MyArrayListImpl(array.length + newList.size());
+        Object[] o = newList.toArray();
+        for (int i = 0; i < array.length; i++) list.add(array[i]);
+        for (int i = 0; i < o.length; i++) list.add(o[i]);
+        list.trim();
+        return list;
     }
+
 
     @Override
     public T get(int index) {
