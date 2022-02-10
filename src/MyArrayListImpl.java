@@ -22,7 +22,10 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void add(Object o, int index) {
-
+        if (actualSize >= array.length / 2) { // если актуальный размер массива достиг размера половины изначального
+            newSize();                        // увеличиваем массив в два раза
+        }
+        array[actualSize++] = o;
     }
 
     @Override
