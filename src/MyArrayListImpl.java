@@ -88,7 +88,16 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public MyArrayListImpl subList(int start, int end) {
-        return null;
+        if (start < 0 || end >= actualSize) {
+            throw new IndexOutOfBoundsException("Incorrect start or end index");
+        }
+
+        MyArrayListImpl list = new MyArrayListImpl();
+        for (int i = start; i <= end; i++) {
+            list.add(array[i]);
+        }
+
+        return list;
     }
 
 
@@ -153,5 +162,4 @@ public class MyArrayListImpl<T> implements MyArrayList {
     public int indexOf(Object o) {
         return 0;
     }
-
 }
