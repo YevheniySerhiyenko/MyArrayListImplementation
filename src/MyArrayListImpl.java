@@ -1,3 +1,5 @@
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.Comparator;
 
 public class MyArrayListImpl<T> implements MyArrayList {
@@ -5,14 +7,32 @@ public class MyArrayListImpl<T> implements MyArrayList {
     private Object[] array;
     private int actualSize = 0;     // заполненность внутреннего массива
 
+    // empty array
+    private static final Object[] EMPTY_ELEMENTDATA = {};
+
 
     public MyArrayListImpl() {
         array = new Object[DEFAULT_SIZE];
     }
 
-    //    конструктор для задания размера
-    public MyArrayListImpl(int size) {
-        array = new Object[size];
+    // конструктор для задания размера
+    public MyArrayListImpl(int capacity) {
+        if (capacity > 0) {
+            array = new Object[capacity];
+        } else if (capacity == 0) {
+            array = EMPTY_ELEMENTDATA;
+        } else {
+            throw new IllegalArgumentException("Illegal Capacity: " + capacity);
+        }
+    }
+
+    public MyArrayListImpl(Collection<? extends T> collection) {
+        array = collection.toArray();
+        if ((actualSize = array.length) != 0) {
+            array = Arrays.copyOf(array, actualSize, Object[].class);
+        } else {
+            array = EMPTY_ELEMENTDATA;
+        }
     }
 
     @Override
@@ -93,7 +113,22 @@ public class MyArrayListImpl<T> implements MyArrayList {
     }
 
     @Override
-    public void contains(Object o) {
+    public boolean contains(Object o) {
+        if (o == null) {
+            for (Object item : array) {
+                if (item == null) {
+                    return true;
+                }
+            }
+        } else {
+            for (Object item : array) {
+                if (item.equals(o)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -102,7 +137,8 @@ public class MyArrayListImpl<T> implements MyArrayList {
     }
 
     @Override
-    public void set(int index, Object o) {
+    public void set(int index, Object element) {
+        
     }
 
     @Override

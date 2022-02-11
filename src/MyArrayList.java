@@ -2,8 +2,6 @@ import java.util.Comparator;
 
 public interface MyArrayList<T> {
 
-
-
     void add(Object o, int index);
 
     MyArrayListImpl<? extends T> concat(MyArrayList<T> newList);
@@ -26,7 +24,7 @@ public interface MyArrayList<T> {
 
     void isEmpty();
 
-    void contains(Object o);
+    boolean contains(Object o);
 
     void add(T t);
 
@@ -47,8 +45,4 @@ public interface MyArrayList<T> {
     void remove(int index);
 
     int indexOf(Object o);
-
-    String toString();
-
 }
-
