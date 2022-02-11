@@ -1,130 +1,83 @@
-import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
-public class MyArrayListImpl<T> implements MyArrayList {
+public class MyArrayListImpl<T> implements MyArrayList<T> {
     private final int DEFAULT_SIZE = 10;
     private Object[] array;
     private int actualSize = 0;     // заполненность внутреннего массива
 
-    //конструктор по умолчанию
+
     public MyArrayListImpl() {
         array = new Object[DEFAULT_SIZE];
     }
 
-    // конструктор для задания размера
+    //    конструктор для задания размера
     public MyArrayListImpl(int size) {
         array = new Object[size];
     }
 
     @Override
     public void add(Object o) {
-         /* если актуальный размер массива достиг размера половины изначального
-         увеличиваем массив в два раза */
-        if (actualSize >= array.length / 2) {
-            newSize();
-        }
-        array[actualSize++] = o;
+
     }
 
-       /* метод для добавления объекта по индексу
-       элементы сдвигаются вправо на одну позицию */
     @Override
     public void add(Object o, int index) {
-        System.arraycopy(array,index,array,index + 1,actualSize - index);
-        array[index] = o;
-        actualSize++;
 
     }
 
-    // метод для склейки двух листов, возвращает новый лист
     @Override
     public MyArrayListImpl<? extends T> concat(MyArrayList newList) {
-        MyArrayListImpl list  = new MyArrayListImpl(array.length + newList.size());
-        Object[] o = newList.toArray();
-        for (int i = 0; i < array.length; i++) list.add(array[i]);
-        for (int i = 0; i < o.length; i++) list.add(o[i]);
-        list.trim();
-        return list;
+        return null;
     }
 
     @Override
     public T get(int index) {
-        trim();
-        T t = null;
-        if (index < array.length) {
-            t =  (T) array[index];
-        }
-        return t;
+        return null;
     }
+
     @Override
-    public int size(){
-        return array.length;
+    public int size() {
+        return 0;
     }
 
     @Override
     public T[] toArray() {
-        return (T[]) Arrays.copyOf(array,actualSize);
+        return null;
     }
 
-    //метод возвращает коллекцию в обратном порядке
     @Override
     public MyArrayListImpl<? extends T> reverseList() {
-        MyArrayListImpl<? extends T> list = new MyArrayListImpl();
-        for (int i = array.length - 1; i >= 0; i--) {
-            list.add(array[i]);
-        }
-        return list;
+        return null;
     }
 
-    // приватный метод для увеличения массива
-    private void newSize(){
-        array = Arrays.copyOf(array, array.length * 2);
+    private void newSize() {
     }
 
-    public void trim(){
-        if (actualSize < array.length){
-            array = Arrays.copyOf(array,actualSize);
-        }
+    @Override
+    public void trim() {
     }
 
-    /* метод для поиска индекса обьекта по значению,
-       возвращает индекс */
     @Override
     public int search(Object value) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i].equals(value) && array[i] != null)
-                return i;
-        }
-        return -1;
-    }
-    // метод для перемешивания элементов коллекции в случайном порядке
-    @Override
-    public void shuffle() {
-        Random random = ThreadLocalRandom.current();
-        for (int i = array.length - 1; i > 0; i--) {
-            int index = random.nextInt(i + 1);
-            // Simple swap
-            int a = (int) array[index];
-            array[index] = array[i];
-            array[i] = a;
-        }
-    }
-    // возвращает коллекцию с элементами с позиции start до позиции end включительно
-    @Override
-    public MyArrayListImpl subList(int start, int end) {
-        MyArrayListImpl list = new MyArrayListImpl();
-        for (int i = start; i <= end ; i++) {
-            list.add(array[i]);
-        }
-        return list;
+        return 0;
     }
 
-    //метод удаляет из листа совпадения со значением value
+    @Override
+    public void shuffle() {
+    }
+
+    @Override
+    public MyArrayListImpl subList(int start, int end) {
+        return null;
+    }
+
+
     @Override
     public void removeIfContains(Object value) {
-        array =  Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
+    }
+
+    @Override
+    public void remove(Object o) {
     }
 
     @Override
@@ -133,10 +86,15 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void clear() {
+        for(int i = 0; i < actualSize; i++) {
+            array[i] = null;
+        }
+        actualSize = 0;
     }
 
     @Override
-    public void isEmpty() {
+    public boolean isEmpty() {
+        return actualSize == 0;
     }
 
     @Override
@@ -145,7 +103,7 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public int hashCode() {
-        return 0;
+        return actualSize;
     }
 
     @Override
@@ -154,15 +112,76 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void remove(int index) {
+        if(index < 0 || index >= actualSize) {
+            return;
+        }
+        int k = 0;
+        Object[] tempArr = new Object[array.length];
+        for(int i = 0; i < actualSize; i++) {
+            if(i == index) {
+                continue;
+            }
+            tempArr[k++] = array[i];
+        }
+        array = tempArr;
+        actualSize--;
     }
 
     @Override
     public int indexOf(Object o) {
-        return 0;
-    }
-    @Override
-    public boolean equals(Object o){
-        return false;
+        // логически, в процессе рефакторинга при вариациях с null приходишь к классическому варианту
+        // другая реализация получается менее лаконичной)) как эта)
+        if(actualSize == 0 || o != null && array[0].getClass() != o.getClass()) {
+            return -1;
+        }
+        for(int i = 0; i < actualSize; i++) {
+            if(o == null || array[i] == null) {
+                if(o == null && array[i] == null) {
+                    return i;
+                }
+                continue;
+            }
+            if(o.equals(array[i])) {
+                return i;
+            }
+        }
+        return -1;
     }
 
+    @Override
+    public String toString() {
+        if(actualSize <= 0) {
+            return "[]";
+        }
+        StringBuilder sb = new StringBuilder("[");
+        for(int i = 0; i < actualSize - 1; i++) {
+            sb.append((array[i]) + ", ");
+        }
+        sb.append((array[actualSize - 1]) + "]");
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if(o == null || o.hashCode() != this.hashCode() || this.getClass() != o.getClass()) {
+            return false;
+        }
+        MyArrayListImpl<T> ot = (MyArrayListImpl<T>) o;
+
+        if(ot.actualSize != actualSize) {
+            return false;
+        }
+        if(actualSize == 0) {
+            return true;
+        }
+        if(this.array[0].getClass() != ot.array[0].getClass()) {
+            return false;
+        }
+        for(int i = 0; i < actualSize; i++) {
+            if(this.array[i] != ot.array[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

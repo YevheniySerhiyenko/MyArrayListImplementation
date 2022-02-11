@@ -24,7 +24,7 @@ public interface MyArrayList<T> {
 
     void shuffle();
 
-    void isEmpty();
+    boolean isEmpty();	//
 
     void contains(Object o);
 
@@ -32,12 +32,16 @@ public interface MyArrayList<T> {
 
     public void trim();
 
+    void remove(Object o);
+
     void sort(Comparator<? super T> comparator);
 
     void clear();
 
+    @Override
     boolean equals(Object o);
 
+    @Override
     int hashCode();
 
     void set(int index, T t);
@@ -46,6 +50,7 @@ public interface MyArrayList<T> {
 
     int indexOf(Object o);
 
+    @Override
     String toString();
 
 }
