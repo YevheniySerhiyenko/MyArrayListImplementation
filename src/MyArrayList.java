@@ -24,7 +24,7 @@ public interface MyArrayList<T> {
 
     void shuffle();
 
-    void isEmpty();
+    boolean isEmpty();
 
     void contains(Object o);
 
