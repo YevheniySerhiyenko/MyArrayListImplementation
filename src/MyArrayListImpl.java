@@ -138,7 +138,10 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void set(int index, Object element) {
-        
+        if (index >= actualSize) {
+            throw new IndexOutOfBoundsException("Index more or equals array size");
+        }
+        array[index] = element;
     }
 
     @Override
