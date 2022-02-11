@@ -102,6 +102,7 @@ public class MyArrayListImpl<T> implements MyArrayList {
 
     @Override
     public void sort(Comparator comparator) {
+        Arrays.sort(array, 0, actualSize, comparator);
     }
 
     @Override

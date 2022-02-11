@@ -36,10 +36,6 @@ public interface MyArrayList<T> {
 
     void clear();
 
-    boolean equals(Object o);
-
-    int hashCode();
-
     void set(int index, T t);
 
     void remove(int index);
