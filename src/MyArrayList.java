@@ -22,13 +22,13 @@ public interface MyArrayList<T> {
 
     void shuffle();
 
-    void isEmpty();
+    boolean isEmpty();	//
 
     boolean contains(Object o);
 
     void add(T t);
 
-    public void trim();
+    void trim();
 
     void remove(Object o);
 
@@ -36,9 +36,16 @@ public interface MyArrayList<T> {
 
     void clear();
 
+    boolean equals(Object o);
+
+    int hashCode();
+
     void set(int index, T t);
 
     void remove(int index);
 
     int indexOf(Object o);
+
+    String toString();
+
 }
