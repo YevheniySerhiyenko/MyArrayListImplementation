@@ -1,3 +1,5 @@
+package main.java;
+
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
@@ -43,6 +45,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
             newSize();                        // увеличиваем массив в два раза
         }
         array[actualSize++] = o;
+        trim();
     }
 
     //    метод для добавления объекта по индексу
@@ -57,7 +60,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     // метод для склейки двух листов, возвращает новый лист
     @Override
     public MyArrayListImpl<? extends T> concat(MyArrayList<T> newList) {
-        MyArrayListImpl<T> list = new MyArrayListImpl<>(array.length + newList.size());
+        MyArrayListImpl<T> list = new MyArrayListImpl<>(actualSize + newList.size());
         Object[] o = newList.toArray();
         for (Object value : array) {
             list.add(value);
@@ -81,7 +84,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     @Override
     public int size() {
-        return array.length;
+        return actualSize;
     }
 
     @Override
@@ -140,7 +143,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     @Override
     public void removeIfContains(Object value) {
-        array = Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
+        Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
     }
 
     @Override
