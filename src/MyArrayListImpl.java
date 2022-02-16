@@ -57,7 +57,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     // метод для склейки двух листов, возвращает новый лист
     @Override
     public MyArrayListImpl<? extends T> concat(MyArrayList<T> newList) {
-        MyArrayListImpl<T> list = new MyArrayListImpl<T>(array.length + newList.size());
+        MyArrayListImpl<T> list = new MyArrayListImpl<>(array.length + newList.size());
         Object[] o = newList.toArray();
         for (Object value : array) {
             list.add(value);
@@ -92,7 +92,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     //метод возвращает коллекцию в обратном порядке
     @Override
     public MyArrayListImpl<? extends T> reverseList() {
-        MyArrayListImpl<? extends T> list = new MyArrayListImpl();
+        MyArrayListImpl<? extends T> list = new MyArrayListImpl<>();
         for (int i = array.length - 1; i >= 0; i--) {
             list.add(array[i]);
         }
@@ -125,12 +125,12 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     // возвращает коллекцию с элементами с позиции start до позиции end включительно
     @Override
-    public MyArrayListImpl subList(int start, int end) {
+    public MyArrayListImpl<T> subList(int start, int end) {
         if (start < 0 || end >= actualSize) {
             throw new IndexOutOfBoundsException("Incorrect start or end index");
         }
 
-        MyArrayListImpl list = new MyArrayListImpl();
+        MyArrayListImpl<T> list = new MyArrayListImpl<>();
         for (int i = start; i <= end; i++) {
             list.add(array[i]);
         }
@@ -153,12 +153,8 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     }
 
     @Override
-    public void remove(Object o) {
-    }
-
-    @Override
-    public void sort(Comparator comparator) {
-        Arrays.sort(array, 0, actualSize, comparator);
+    public void sort(Comparator<T> comparator) {
+        Arrays.sort((T[]) array, 0, actualSize, comparator);
     }
 
     @Override
@@ -189,8 +185,7 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
                 }
             }
         }
-
-        return false;
+         return false;
     }
 
     @Override

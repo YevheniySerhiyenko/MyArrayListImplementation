@@ -30,9 +30,7 @@ public interface MyArrayList<T> {
 
     void trim();
 
-    void remove(Object o);
-
-    void sort(Comparator<? super T> comparator);
+    void sort(Comparator<T> comparator);
 
     void clear();
 
@@ -42,10 +40,10 @@ public interface MyArrayList<T> {
 
     void set(int index, T t);
 
-    void remove(int index);
-
     int indexOf(Object o);
 
     String toString();
+
+    void remove(int index);
 
 }
