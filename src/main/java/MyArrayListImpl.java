@@ -143,7 +143,8 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     @Override
     public void removeIfContains(Object value) {
-        Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
+       array = Arrays.stream(array).filter(o -> !o.equals(value)).toArray();
+       actualSize--;
     }
 
     @Override

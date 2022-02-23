@@ -11,6 +11,7 @@ import test.java.Compare;
 
 public class MyArrayListImplTest {
     MyArrayListImpl<Integer> listInt;
+    MyArrayListImpl<Integer> listInt2;
     MyArrayListImpl<String> listString;
     MyArrayListImpl<String> listString2;
     MyArrayListImpl<Number> listDouble;
@@ -19,6 +20,7 @@ public class MyArrayListImplTest {
 
     @BeforeEach
     void setUp() {
+        listInt2 = new MyArrayListImpl<>();
         listInt = new MyArrayListImpl<>();
         listString = new MyArrayListImpl<>();
         listString2 = new MyArrayListImpl<>();
@@ -46,6 +48,12 @@ public class MyArrayListImplTest {
         listInt.add(9);
         //[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
+        listInt2.add(34);
+        listInt2.add(56);
+        listInt2.add(869);
+        listInt2.add(68);
+        listInt2.add(98);
+
         listString.add("Hello");
         listString.add(" ");
         listString.add("world");
@@ -70,7 +78,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void addTest() {
+    void add() {
         Assertions.assertEquals("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]",listInt.toString());
         Assertions.assertEquals(10,listInt.size());
         Assertions.assertEquals("[Hello,  , world, java]",listString.toString());
@@ -78,12 +86,13 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void concatTest() {
+    void concat() {
         Assertions.assertEquals("[Hello,  , world, java, this, strings, for, concat, test]",listString.concat(listString2).toString());
+        Assertions.assertEquals("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 34, 56, 869, 68, 98]",listInt.concat(listInt2).toString());
     }
 
     @Test
-    void getTest() {
+    void get() {
         Assertions.assertNull(listString.get(15));
         Assertions.assertEquals("Hello",listString.get(0));
         Assertions.assertEquals(8.4,listDouble.get(0));
@@ -91,33 +100,39 @@ public class MyArrayListImplTest {
 
 
     @Test
-    void toArrayTest() {
+    void toArray() {
+        Integer[] array = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
+        Assertions.assertArrayEquals(array,listInt.toArray());
+        String[] arrayStr = {"this", "strings", "for", "concat", "test"};
+        Assertions.assertArrayEquals(arrayStr,listString2.toArray());
     }
 
     @Test
-    void reverseListTest() {
+    void reverseList() {
         Assertions.assertEquals("[java, world,  , Hello]",listString.reverseList().toString());
         Assertions.assertEquals("[9, 8, 7, 6, 5, 4, 3, 2, 1, 0]",listInt.reverseList().toString());
     }
 
 
     @Test
-    void subListTest() {
+    void subList() {
         Assertions.assertEquals("[0, 1, 2, 3]", listInt.subList(0,3).toString());
         Assertions.assertEquals("[this, strings, for]", listString2.subList(0,2).toString());
         Assertions.assertEquals("[ , world, java]", listString.subList(1,3).toString());
     }
 
     @Test
-    void removeIfContainsTest() {
-//        listString.removeIfContains("Hello");
-//        Assertions.assertEquals("[  ,world, java]",listString.toString());
-//        listDouble.removeIfContains(4.2);
-//        Assertions.assertEquals("[8.4, 0, 9.5, 18.43]",listDouble.toString());
+    void removeIfContains() {
+         listString.removeIfContains("Hello");
+        Assertions.assertEquals("[ , world, java]",listString.toString());
+        listDouble.removeIfContains(4.2);
+        Assertions.assertEquals("[8.4, 0, 9.5, 18.43]",listDouble.toString());
+        listInt.removeIfContains(3);
+        Assertions.assertEquals("[0, 1, 2, 4, 5, 6, 7, 8, 9]",listInt.toString());
     }
 
     @Test
-    void searchTest() {
+    void search() {
         Assertions.assertEquals(3,listString2.search("concat"));
         Assertions.assertEquals(3,listInt.search(3));
         Assertions.assertEquals(3,listDouble.search(9.5));
@@ -130,7 +145,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void clearTest() {
+    void clear() {
         listDouble.clear();
         listInt.clear();
         listString.clear();
@@ -140,7 +155,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void isEmptyTest() {
+    void isEmpty() {
         listInt.clear();
         Assertions.assertTrue(listInt.isEmpty());
         listInt.add(1);
@@ -148,7 +163,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void containsTest() {
+    void contains() {
         Assertions.assertFalse(listInt.contains(11));
         Assertions.assertTrue(listInt.contains(4));
         Assertions.assertFalse(listString.contains("hi"));
@@ -156,7 +171,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void setTest() {
+    void set() {
         listInt.set(6,789);
         Assertions.assertEquals("[0, 1, 2, 3, 4, 5, 789, 7, 8, 9]",listInt.toString());
         listString.set(1,"WORLD");
@@ -164,7 +179,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void removeTest() {
+    void remove() {
         listInt.remove(5);
         Assertions.assertEquals("[0, 1, 2, 3, 4, 6, 7, 8, 9]",listInt.toString());
 
@@ -174,7 +189,7 @@ public class MyArrayListImplTest {
     }
 
     @Test
-    void indexOfTest() {
+    void indexOf() {
         Assertions.assertEquals(-1,listString.indexOf("AAA"));
         Assertions.assertEquals(0,listString.indexOf("Hello"));
         Assertions.assertEquals(6,listInt.indexOf(6));
